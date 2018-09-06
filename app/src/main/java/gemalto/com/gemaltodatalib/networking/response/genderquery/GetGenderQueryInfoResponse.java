@@ -3,20 +3,21 @@ package gemalto.com.gemaltodatalib.networking.response.genderquery;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Manuramv on 9/6/2018.
  */
 
-public class GetGenderQueryInfoResponse {
+public class GetGenderQueryInfoResponse implements Serializable {
 
     @SerializedName("results")
     @Expose
-    private List<UserResult> results = null;
+    public List<UserResult> results;
     @SerializedName("info")
     @Expose
-    private UserInfo info;
+    public UserInfo info;
 
     public List<UserResult> getResults() {
         return results;

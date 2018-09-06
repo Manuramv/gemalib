@@ -106,7 +106,7 @@ public class Apiclient {
     public interface ApiService {
 
         @GET
-        Call<GetGenderQueryInfoResponse> getGenderInfoAPI(@Url Uri url);
+        Call  <GetGenderQueryInfoResponse> getGenderInfoAPI(@Url Uri url);
 
        /* @GET
         Call<GetCarLocationResponse> getCarLocationAPI(@Url Uri url);*/
