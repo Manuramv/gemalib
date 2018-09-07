@@ -111,6 +111,9 @@ public class Apiclient {
         @GET
         Call  <GetGenderQueryInfoResponse> getUserIdInfoAPI(@Url Uri url);
 
+        @GET
+        Call  <GetGenderQueryInfoResponse> getMultiplUserInfoAPI(@Url Uri url);
+
        /* @GET
         Call<GetCarLocationResponse> getCarLocationAPI(@Url Uri url);*/
 

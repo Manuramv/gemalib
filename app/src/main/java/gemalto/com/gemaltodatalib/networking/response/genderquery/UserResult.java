@@ -1,7 +1,12 @@
 package gemalto.com.gemaltodatalib.networking.response.genderquery;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 
 import gemalto.com.gemaltodatalib.networking.response.genderquery.Dob;
 import gemalto.com.gemaltodatalib.networking.response.genderquery.Id;
@@ -15,13 +20,13 @@ import gemalto.com.gemaltodatalib.networking.response.genderquery.UserPicture;
  * Created by Manuramv on 9/6/2018.
  */
 
-public class UserResult {
+public class UserResult implements Parcelable {
     @SerializedName("gender")
     @Expose
     private String gender;
     @SerializedName("name")
     @Expose
-    private UserName name;
+    public UserName name;
     @SerializedName("location")
     @Expose
     private UserLocation location;
@@ -52,6 +57,28 @@ public class UserResult {
     @SerializedName("nat")
     @Expose
     private String nat;
+
+    protected UserResult(Parcel in) {
+        gender = in.readString();
+        email = in.readString();
+        phone = in.readString();
+        cell = in.readString();
+        nat = in.readString();
+        //name = in.readParcelable(getClass().getClassLoader());
+        name = in.readParcelable(UserName.class.getClassLoader());
+    }
+
+    public static final Creator<UserResult> CREATOR = new Creator<UserResult>() {
+        @Override
+        public UserResult createFromParcel(Parcel in) {
+            return new UserResult(in);
+        }
+
+        @Override
+        public UserResult[] newArray(int size) {
+            return new UserResult[size];
+        }
+    };
 
     public String getGender() {
         return gender;
@@ -147,5 +174,23 @@ public class UserResult {
 
     public void setNat(String nat) {
         this.nat = nat;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+
+        parcel.writeString(gender);
+        parcel.writeString(email);
+        parcel.writeString(phone);
+        parcel.writeString(cell);
+        parcel.writeString(nat);
+        parcel.writeParcelable(name, i);
+
     }
 }
