@@ -10,8 +10,11 @@ import gemalto.com.gemaltodatalib.callbackinterface.MultipleUserCallback;
 import gemalto.com.gemaltodatalib.callbackinterface.PassMultipleUserIdInterface;
 import gemalto.com.gemaltodatalib.callbackinterface.PassUserIdInterface;
 import gemalto.com.gemaltodatalib.callbackinterface.UserIdCallback;
+import gemalto.com.gemaltodatalib.gemdatabase.DbHelper;
 import gemalto.com.gemaltodatalib.networking.GemaltoContants;
+import gemalto.com.gemaltodatalib.networking.response.genderquery.GetGenderQueryInfoResponse;
 import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
+import gemalto.com.gemaltodatalib.serviceimpl.CommonUtils;
 import gemalto.com.gemaltodatalib.serviceimpl.MultipleUserDataImpl;
 import gemalto.com.gemaltodatalib.serviceimpl.UserIDQueryImpl;
 
@@ -33,8 +36,10 @@ public class RetrieveMultipleUserData {
         multipleUserDataImplObj = new MultipleUserDataImpl(mActivityObj);
         multipleUserCallbackObj = new MultipleUserCallback() {
             @Override
-            public void onSuccess(ArrayList<UserResult> value) {
+            public void onSuccess(GetGenderQueryInfoResponse value) {
                 Log.d("TAG","=======================Onsuccess mANU   INSIDE multiple user Data");
+
+                CommonUtils.insertAvailableEmployeeintoDb(value,mActivityObj);
                 passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(value);
             }
 
@@ -45,8 +50,22 @@ public class RetrieveMultipleUserData {
 
             }
         };
-        String url = GemaltoContants.END_POINT+"?results="+count;
-        multipleUserDataImplObj.triggerMultipleUserAPI(url,multipleUserCallbackObj);
+
+        if(CommonUtils.isConnectingToInternet(mActivityObj)){
+            String url = GemaltoContants.END_POINT+"?results="+count;
+            multipleUserDataImplObj.triggerMultipleUserAPI(url,multipleUserCallbackObj);
+
+        } else {
+            Log.d("TAG","no internet and reading from database");
+            GetGenderQueryInfoResponse obj = CommonUtils.returnSingleItemFromDb(mActivityObj, DbHelper.COLUMN_SEED,count);
+            if(obj!=null){
+                passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(obj);
+            } else {
+                Log.d("TAG","No data from database");
+                passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(null);
+            }
+
+        }
 
     }
 }

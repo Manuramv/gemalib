@@ -3,6 +3,7 @@ package gemalto.com.gemaltodatalib.callbackinterface;
 import java.util.ArrayList;
 import java.util.List;
 
+import gemalto.com.gemaltodatalib.networking.response.genderquery.GetGenderQueryInfoResponse;
 import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
 
 /**
@@ -10,5 +11,5 @@ import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
  */
 
 public interface PassMultipleUserIdInterface {
-    void onReceivingMultipleUserDataFromlib(ArrayList<UserResult> value);
+    void onReceivingMultipleUserDataFromlib(GetGenderQueryInfoResponse value);
 }

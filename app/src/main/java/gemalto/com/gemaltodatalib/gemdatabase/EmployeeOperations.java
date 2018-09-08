@@ -153,4 +153,28 @@ public class EmployeeOperations {
         else
             return null;
     }
+
+    public ArrayList<Employee> getMultipleEmployees(String count) {
+
+       Cursor cursor = database.query(DbHelper.TABLE_EMPLOYEES,allColumns,null,null,null, null, null,count );
+       // Cursor cursor = database.query( select * from  "DbHelper.TABLE_EMPLOYEES LIMIT " );
+
+        ArrayList<Employee> employees = new ArrayList<>();
+        if(cursor.getCount() > 0){
+            while(cursor.moveToNext()){
+                Employee employee = new Employee();
+                employee.setEmpId(cursor.getLong(cursor.getColumnIndex(DbHelper.COLUMN_ID)));
+                employee.setFirstname(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_FIRST_NAME)));
+                employee.setLastname(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_LAST_NAME)));
+                employee.setGender(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_GENDER)));
+                employee.setEmail(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_EMAIL)));
+                employee.setDob(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_DOB)));
+                employee.setSeed(cursor.getString(cursor.getColumnIndex(DbHelper.COLUMN_SEED)));
+                employees.add(employee);
+            }
+        }
+        // return All Employees
+        return employees;
+    }
+
 }

@@ -46,7 +46,7 @@ public class MultipleUserDataImpl {
                     public void onResponse(Call<GetGenderQueryInfoResponse> call, Response<GetGenderQueryInfoResponse> response)
                     {
 
-                        callbacks.onSuccess(response.body().getResults());
+                        callbacks.onSuccess(response.body());
 
                     }
 

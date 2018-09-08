@@ -46,19 +46,23 @@ public class CommonUtils {
         ArrayList<UserResult> userResultsList = new ArrayList<>();
         Dob dob = new Dob();
 
-        userInfo.setSeed(list.get(0).getSeed());
-        userName.setFirst(list.get(0).getFirstname());
-        userName.setLast(list.get(0).getLastname());
-        userResult.setName(userName);
-        userResult.setEmail(list.get(0).getEmail().toString());
-        userResult.setGender("male");
-        dob.setAge(18);
-        dob.setDate(list.get(0).getDob().toString());
-        userResult.setDob(dob);
+        for(int i=0;i<list.size();i++ ){
+            userInfo.setSeed(list.get(0).getSeed());
+            userName.setFirst(list.get(0).getFirstname());
+            userName.setLast(list.get(0).getLastname());
+            userResult.setName(userName);
+            userResult.setEmail(list.get(0).getEmail().toString());
+            userResult.setGender("male");
+            dob.setAge(18);
+            dob.setDate(list.get(0).getDob().toString());
+            userResult.setDob(dob);
 
-        getGenderQueryInfoResponseObj.setInfo(userInfo);
-        userResultsList.add(userResult);
-        getGenderQueryInfoResponseObj.setResults(userResultsList);
+            getGenderQueryInfoResponseObj.setInfo(userInfo);
+            userResultsList.add(userResult);
+            getGenderQueryInfoResponseObj.setResults(userResultsList);
+        }
+
+
         return getGenderQueryInfoResponseObj;
     }
 
@@ -98,6 +102,10 @@ public class CommonUtils {
                 return CommonUtils.generateJsonObj(employeeOps.getEmployeeGender(queryString));
         } else if(columntoQuery.equalsIgnoreCase(DbHelper.COLUMN_SEED)){
             return CommonUtils.generateJsonObj(employeeOps.getEmployeeSeed(queryString));
+        } else if( columntoQuery.equalsIgnoreCase("byCount")){
+            return CommonUtils.generateJsonObj(employeeOps.getMultipleEmployees(queryString));
+        } else if( columntoQuery.equalsIgnoreCase("ALL")) {
+            return CommonUtils.generateJsonObj(employeeOps.getAllEmployees());
         }
 
 
@@ -137,6 +145,28 @@ public class CommonUtils {
         userResultsList.add(userResult);
         getGenderQueryInfoResponseObj.setResults(userResultsList);
         return getGenderQueryInfoResponseObj;
+
+    }
+
+    public static void insertAvailableEmployeeintoDb(GetGenderQueryInfoResponse value, AppCompatActivity mActivityObj) {
+
+        EmployeeOperations employeeOps;
+        employeeOps = new EmployeeOperations(mActivityObj);
+        employeeOps.open();
+        Employee newEmployee = new Employee();
+        newEmployee.setSeed((value.getInfo().getSeed().toString()));
+        ArrayList<UserResult> valueList = value.getResults();
+
+        for(int i=0; i< valueList.size();i++){
+            newEmployee.setFirstname(valueList.get(i).getName().getFirst());
+            newEmployee.setLastname(valueList.get(i).getName().getLast());
+            newEmployee.setEmail(valueList.get(i).getEmail());
+            newEmployee.setDob(valueList.get(i).getDob().toString());
+            // newEmployee.set(valueList.get(0).getDob().toString());
+            newEmployee.setGender(valueList.get(i).getGender().toString());
+            employeeOps.addEmployee(newEmployee);
+        }
+
 
     }
 }
