@@ -58,7 +58,7 @@ public class UserResult implements Parcelable {
     @Expose
     private String nat;
 
-    protected UserResult(Parcel in) {
+    public UserResult(Parcel in) {
         gender = in.readString();
         email = in.readString();
         phone = in.readString();
@@ -82,6 +82,10 @@ public class UserResult implements Parcelable {
             return new UserResult[size];
         }
     };
+
+    public UserResult() {
+
+    }
 
     public String getGender() {
         return gender;

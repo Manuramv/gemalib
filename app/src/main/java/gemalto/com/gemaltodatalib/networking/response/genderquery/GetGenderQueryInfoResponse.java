@@ -35,4 +35,6 @@ public class GetGenderQueryInfoResponse implements Serializable {
     public void setInfo(UserInfo info) {
         this.info = info;
     }
+
+
 }

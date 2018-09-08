@@ -110,7 +110,7 @@ public class GenderQueryImpl {
                     public void onResponse(Call<GetGenderQueryInfoResponse> call, Response<GetGenderQueryInfoResponse> response)
                     {
 
-                        callbacks.onSuccess(response.body().getResults());
+                        callbacks.onSuccess(response.body());
 
                         /*JsonObject object = response.body();
                         boolean success = object.get("success").getAsBoolean(); //json objesinde dönen success alanı true ise

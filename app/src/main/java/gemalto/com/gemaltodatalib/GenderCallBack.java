@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import gemalto.com.gemaltodatalib.networking.response.genderquery.GetGenderQueryInfoResponse;
 import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
 
 /**
@@ -11,7 +12,7 @@ import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
  */
 
 public interface GenderCallBack {
-    List<UserResult> onSuccess(List<UserResult> value);
+    List<UserResult> onSuccess(GetGenderQueryInfoResponse value);
 
     void onError( Throwable throwable);
 }

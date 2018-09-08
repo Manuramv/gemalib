@@ -21,7 +21,7 @@ public class UserName implements Parcelable {
     @Expose
     private String last;
 
-    protected UserName(Parcel in) {
+    public UserName(Parcel in) {
         title = in.readString();
         first = in.readString();
         last = in.readString();
@@ -38,6 +38,10 @@ public class UserName implements Parcelable {
             return new UserName[size];
         }
     };
+
+    public UserName() {
+
+    }
 
     public String getTitle() {
         return title;

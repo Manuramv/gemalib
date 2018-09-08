@@ -18,7 +18,7 @@ public class Dob implements Parcelable{
     @Expose
     private Integer age;
 
-    protected Dob(Parcel in) {
+    public Dob(Parcel in) {
         date = in.readString();
         if (in.readByte() == 0) {
             age = null;
@@ -38,6 +38,10 @@ public class Dob implements Parcelable{
             return new Dob[size];
         }
     };
+
+    public Dob() {
+
+    }
 
     public String getDate() {
         return date;

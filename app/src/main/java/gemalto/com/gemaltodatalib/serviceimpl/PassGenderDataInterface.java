@@ -2,6 +2,7 @@ package gemalto.com.gemaltodatalib.serviceimpl;
 
 import java.util.List;
 
+import gemalto.com.gemaltodatalib.networking.response.genderquery.GetGenderQueryInfoResponse;
 import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
 
 /**
@@ -9,5 +10,5 @@ import gemalto.com.gemaltodatalib.networking.response.genderquery.UserResult;
  */
 
 public interface PassGenderDataInterface {
-    void onReceivingDataFromlib(List<UserResult> value);
+    void onReceivingDataFromlib(GetGenderQueryInfoResponse value);
 }
