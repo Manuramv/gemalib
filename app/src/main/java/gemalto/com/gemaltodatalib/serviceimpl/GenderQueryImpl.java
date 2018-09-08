@@ -100,9 +100,9 @@ public class GenderQueryImpl {
 
 
 
-    public void revealCourtPlace(String courtID, @Nullable final GenderCallBack callbacks)
+    public void triggerGenderInfoAPI( String gendervalue,@Nullable final GenderCallBack callbacks)
     {
-        String url = GemaltoContants.END_POINT+"?gender="+"female";
+        String url = GemaltoContants.END_POINT+"?gender="+gendervalue;
         Uri genderQueryURL = Uri.parse(url);
         new Apiclient(mActivityObj.getApplicationContext()).getApiService().getGenderInfoAPI(genderQueryURL)
                 .enqueue(new Callback<GetGenderQueryInfoResponse>() {

@@ -66,6 +66,9 @@ public class UserResult implements Parcelable {
         nat = in.readString();
         //name = in.readParcelable(getClass().getClassLoader());
         name = in.readParcelable(UserName.class.getClassLoader());
+        id = in.readParcelable(UserName.class.getClassLoader());
+        dob = in.readParcelable(UserName.class.getClassLoader());
+
     }
 
     public static final Creator<UserResult> CREATOR = new Creator<UserResult>() {
@@ -191,6 +194,8 @@ public class UserResult implements Parcelable {
         parcel.writeString(cell);
         parcel.writeString(nat);
         parcel.writeParcelable(name, i);
+        parcel.writeParcelable(id, i);
+        parcel.writeParcelable(dob, i);
 
     }
 }

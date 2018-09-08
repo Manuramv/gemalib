@@ -23,7 +23,7 @@ import retrofit2.Call;
  * Created by Manuramv on 9/5/2018.
  */
 
-public class RetrieveData implements GenderCallBack {
+public class RetrieveData  {
  private AppCompatActivity mActivityObj;
     private java.lang.String server_response;
 
@@ -70,71 +70,10 @@ public class RetrieveData implements GenderCallBack {
 
             }
         };
-        //revealCourtPlace("ll",genderCallBackObj);
-        //GenderCallBack kk = null;
-
-        String url = GemaltoContants.END_POINT+"?gender="+"female";
-        Uri genderQueryURL = Uri.parse(url);
-
-       //genderQueryObj.revealCourtPlace("vv",genderCallBackObj);
-        Log.d("TAG","=======================Value returning::"+valueList);
-         //return getValueList();
-
-        try {
-            new MyAsyncTask().execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        genderQueryObj.triggerGenderInfoAPI(gender,genderCallBackObj);
 
 
         return  valueList;
 
     }
-    public void initiateSeedQuery(){
-        Log.d("TAG","AAR library initiateGenderQuery::"+mActivityObj);
-    }
-    public void initiateResultQuery(){
-        Log.d("TAG","AAR library initiateGenderQuery::"+mActivityObj);
-    }
-
-    public Call<GetGenderQueryInfoResponse> revealCourtPlace(String courtID, @Nullable GenderCallBack callbacks)
-    {
-        /*return BaseService.getInstance()
-                .getUniqueCourt(PackageInstaller.Session.getToken(),courtID);*/
-        String url = GemaltoContants.END_POINT+"?gender="+"female";
-        Uri genderQueryURL = Uri.parse(url);
-
-        return  new Apiclient(mActivityObj.getApplicationContext()).getApiService().getGenderInfoAPI(genderQueryURL);
-    }
-
-   @Override
-    public List<UserResult> onSuccess(List<UserResult> value) {
-        Log.d("TAG","=======================ONSUCCESS mANU");
-       return value;
-   }
-
-    @Override
-    public void onError(Throwable throwable) {
-        Log.d("TAG","=======================ONFailure mANU");
-    }
-
-
-
-
-    private class MyAsyncTask extends AsyncTask<Void, Void, Void>
-    {
-        @Override
-        protected Void doInBackground(Void... params) {
-            genderQueryObj.revealCourtPlace("vv",genderCallBackObj);
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void result) {
-
-        }
-
-    }
-
 }
