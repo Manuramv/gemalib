@@ -51,21 +51,26 @@ public class RetrieveMultipleUserData {
             }
         };
 
-        if(CommonUtils.isConnectingToInternet(mActivityObj)){
+
+        if(count.equalsIgnoreCase("ALL")){
+            loadFromDatabase(passMultipleUserIdInterface,count);
+        } else if(CommonUtils.isConnectingToInternet(mActivityObj)){
             String url = GemaltoContants.END_POINT+"?results="+count;
             multipleUserDataImplObj.triggerMultipleUserAPI(url,multipleUserCallbackObj);
 
         } else {
-            Log.d("TAG","no internet and reading from database");
-            GetGenderQueryInfoResponse obj = CommonUtils.returnSingleItemFromDb(mActivityObj, DbHelper.COLUMN_SEED,count);
-            if(obj!=null){
-                passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(obj);
-            } else {
-                Log.d("TAG","No data from database");
-                passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(null);
-            }
-
+            loadFromDatabase(passMultipleUserIdInterface,count);
         }
 
+    }
+    public void loadFromDatabase(PassMultipleUserIdInterface passMultipleUserIdInterface, String count){
+        Log.d("TAG","no internet and reading from database");
+        GetGenderQueryInfoResponse obj = CommonUtils.returnSingleItemFromDb(mActivityObj, "ALL",count);
+        if(obj!=null){
+            passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(obj);
+        } else {
+            Log.d("TAG","No data from database");
+            passMultipleUserIdInterface.onReceivingMultipleUserDataFromlib(null);
+        }
     }
 }

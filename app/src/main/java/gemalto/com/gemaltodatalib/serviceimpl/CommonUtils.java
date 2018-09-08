@@ -38,29 +38,31 @@ public class CommonUtils {
 
     public static GetGenderQueryInfoResponse generateJsonObj(ArrayList<Employee> list) {
         JSONObject obj = new JSONObject();
-        List<UserResult> userList = new ArrayList<>();
         GetGenderQueryInfoResponse getGenderQueryInfoResponseObj = new GetGenderQueryInfoResponse();
-        UserInfo userInfo = new UserInfo();
-        UserName userName = new UserName();
-        UserResult userResult = new UserResult();
-        ArrayList<UserResult> userResultsList = new ArrayList<>();
-        Dob dob = new Dob();
+        
+        
+        ArrayList<UserResult>  userResultsList = new ArrayList<>();
 
         for(int i=0;i<list.size();i++ ){
-            userInfo.setSeed(list.get(0).getSeed());
-            userName.setFirst(list.get(0).getFirstname());
-            userName.setLast(list.get(0).getLastname());
+            UserInfo userInfo = new UserInfo();
+            UserName userName = new UserName();
+            Dob dob = new Dob();
+            UserResult userResult = new UserResult();
+            userInfo.setSeed(list.get(i).getSeed());
+            userName.setFirst(list.get(i).getFirstname());
+            userName.setLast(list.get(i).getLastname());
             userResult.setName(userName);
-            userResult.setEmail(list.get(0).getEmail().toString());
+            userResult.setEmail(list.get(i).getEmail().toString());
             userResult.setGender("male");
             dob.setAge(18);
-            dob.setDate(list.get(0).getDob().toString());
+            dob.setDate(list.get(i).getDob().toString());
             userResult.setDob(dob);
 
             getGenderQueryInfoResponseObj.setInfo(userInfo);
             userResultsList.add(userResult);
-            getGenderQueryInfoResponseObj.setResults(userResultsList);
+
         }
+        getGenderQueryInfoResponseObj.setResults(userResultsList);
 
 
         return getGenderQueryInfoResponseObj;
@@ -88,16 +90,6 @@ public class CommonUtils {
         EmployeeOperations employeeOps;
         employeeOps = new EmployeeOperations(mActivityObj);
         employeeOps.open();
-        /*if(employeeOps.getAllEmployees()!=null && employeeOps.getAllEmployees().size()>0){
-            Log.d("ttt","Size of database:::"+employeeOps.getAllEmployees().size());
-            ArrayList<Employee> emplSingle =  employeeOps.getAllEmployees();
-            Log.d("ttt","Size of database:::"+emplSingle.get(0).getFirstname());
-            Log.d("ttt","Size of database:::"+emplSingle.get(1).getFirstname());
-
-            return CommonUtils.generateJsonObj(emplSingle);
-
-        }*/
-
         if(columntoQuery.equalsIgnoreCase(DbHelper.COLUMN_GENDER)){
                 return CommonUtils.generateJsonObj(employeeOps.getEmployeeGender(queryString));
         } else if(columntoQuery.equalsIgnoreCase(DbHelper.COLUMN_SEED)){
